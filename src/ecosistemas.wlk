@@ -34,6 +34,8 @@ class Granja inherits Habitat{
 	}
 	
 	override method estaEnEquilibrio() = seresVivos.all({ser => ser.estaHidratado()})	
+	
+	method estaLista() = seresVivos.AnyOne({ser => ser.estaListo()})
 }
 
 class Cueva inherits Habitat{
@@ -53,6 +55,7 @@ class Especie{
 
 
 class SerVivo{
+	var vivo = true
 	var property nivelDeHidratacion = 0
 	
 	method tomarAguaMarciana(){
@@ -61,29 +64,30 @@ class SerVivo{
 	
 	method estaHidratado() = nivelDeHidratacion >= 50
 	
+	method estaVivo() = vivo
+	
+	method estaListo()
 }
 
 
 class Planta inherits SerVivo{
 	var property altura;
 	const property especie;
-	var vivo = true
 	
-	method estaVivo() = vivo
 	method biomasa() = 50.min(altura * 2)
 	method tamanio() = if (altura >= 10) "grande" else "pequenio"
 	method sufrirIncendio() {
 		if (self.tamanio() == "pequenio") {vivo = false}
 		else altura -= 5
 	}
+	
+	override method estaListo() = not self.estaVivo() && self.tamanio() != "pequenio"
 }
 
 class Animal inherits SerVivo{
 	const property especie;
 	var property peso;
-	var vivo = true
 	
-	method estaVivo() = vivo
 	method biomasa() = peso ** 2 / especie.coeficiente() 
 	method tamanio() = 
 		if (peso < especie.pesoReferencia()) "pequenio"
@@ -94,6 +98,8 @@ class Animal inherits SerVivo{
 		vivo = self.especie().formaLocomocion().seSalva(self.tamanio()) 
 		peso -= peso * 0.9
 	}	
+		
+	override method estaListo() = not self.estaVivo() && self.tamanio() != "pequenio"
 }
 
 object volar{

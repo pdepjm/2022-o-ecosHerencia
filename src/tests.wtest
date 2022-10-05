@@ -1,7 +1,6 @@
 import ecosistemas.*
 
 describe "tests de Ecosistemas (parte 1)" {
-
 	const golondrina = new Especie(coeficiente = 15, formaLocomocion = volar, pesoReferencia = 2)
 	const mejillon = new Especie(coeficiente = 24, pesoReferencia = 0.5)
 	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
@@ -60,6 +59,7 @@ describe "tests de Ecosistemas (parte 1)" {
 	}
 }
 
+ 
 describe "Granjas"{
 	const golondrina = new Especie(coeficiente = 15, formaLocomocion = volar, pesoReferencia = 2)
 	const mejillon = new Especie(coeficiente = 24, pesoReferencia = 0.5)
@@ -79,6 +79,8 @@ describe "Granjas"{
 	const vaca1 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
 	const vaca2 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
 	const vaca3 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
+	
+	const  = new Granja(seresVivos =  [vaca1, vaca2, vaca3])
 		
 	test "Se puede saber si la granja tiene una especie"{
 		assert.that(granja.tieneEspecie(plantusPotus))	
@@ -88,14 +90,16 @@ describe "Granjas"{
 		assert.throwsException({sabana.sacarSerVivo()})
 	}
 	 
-	test "La granja de vacas esta en equilibrio"{
-		const granjaDeVacas = new Granja(seresVivos =  [vaca1, vaca2, vaca3])
-			
+	test "La granja de vacas esta en equilibrio" { 
 		assert.that(granjaDeVacas.estaEnEquilibrio())	
 	}
 	
+	test "Una granja de vacas despues de un incendio esta lista para dar comida"{
+		granjaDeVacas.incendio()
+		
+		assert.that(granjaDeVacas.estaLista())	
+	}		
 }
-
 
 describe "Cuevas"{
 	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
@@ -116,9 +120,7 @@ describe "Cuevas"{
 	test "Una cueva tiene une biomasa menor que un bosque con los mismos seres vivos"{
 		assert.that(bosque.biomasa() > cueva.biomasa())	
 	}
-	
 }
-
 
 
 describe "Seres vivos"{
@@ -133,6 +135,12 @@ describe "Seres vivos"{
 		vaca.tomarAguaMarciana()
 		
 		assert.equals(60, vaca.nivelDeHidratacion())	
+	}
+	
+	test "Una vaca esta lista para ser comida"{
+		vaca.sufrirIncendio()
+		
+		assert.that(vaca.estaListo())
 	}
 }
 
