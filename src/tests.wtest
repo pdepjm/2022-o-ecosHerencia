@@ -68,9 +68,7 @@ describe "Granjas"{
 	const plantusPotus = new Especie()
 	
 	const pepita = new Animal(especie = golondrina, peso = 1)
-	const lara = new Animal(especie = golondrina, peso = 10)
 	const almejita = new Animal(especie = mejillon, peso = 0.1)
-	const atomica = new Animal(especie = hormiga, peso = 0.01)
 	
 	const palmera = new Planta(altura = 9, especie = plantusPotus)
 	const arbusto = new Planta(altura = 3, especie = plantusPotus)
@@ -81,8 +79,7 @@ describe "Granjas"{
 	const vaca1 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
 	const vaca2 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
 	const vaca3 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
-	
-	
+		
 	test "Se puede saber si la granja tiene una especie"{
 		assert.that(granja.tieneEspecie(plantusPotus))	
 	}
@@ -98,6 +95,30 @@ describe "Granjas"{
 	}
 	
 }
+
+
+describe "Cuevas"{
+	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
+	const atomica1 = new Animal(especie = hormiga, peso = 0.01)
+	const atomica2 = new Animal(especie = hormiga, peso = 0.01)
+	const atomica3 = new Animal(especie = hormiga, peso = 0.01) 
+	
+	const hongo = new Especie()
+	const champi1 = new Planta(altura = 1, especie = hongo)
+	const champi2 = new Planta(altura = 1, especie = hongo)
+	const champi3 = new Planta(altura = 1, especie = hongo)
+	const champi4 = new Planta(altura = 1, especie = hongo)
+	const champi5 = new Planta(altura = 1, especie = hongo)
+	
+	const cueva = new Cueva(seresVivos = [atomica1, atomica2, atomica3, champi1, champi2, champi3, champi4, champi5])
+	const bosque = new Habitat(seresVivos = [atomica1, atomica2, atomica3, champi1, champi2, champi3, champi4, champi5])
+		
+	test "Una cueva tiene une biomasa menor que un bosque con los mismos seres vivos"{
+		assert.that(bosque.biomasa() > cueva.biomasa())	
+	}
+	
+}
+
 
 
 describe "Seres vivos"{

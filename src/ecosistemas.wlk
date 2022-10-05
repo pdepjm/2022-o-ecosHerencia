@@ -36,6 +36,15 @@ class Granja inherits Habitat{
 	override method estaEnEquilibrio() = seresVivos.all({ser => ser.estaHidratado()})	
 }
 
+class Cueva inherits Habitat{
+		
+	override method biomasa() {
+		const biomasaBase = super()
+		return biomasaBase / (seresVivos.size() ** (1/2)) 
+	}	
+}
+
+
 class Especie{
 	const property coeficiente = 1;
 	const property formaLocomocion = quieto;
