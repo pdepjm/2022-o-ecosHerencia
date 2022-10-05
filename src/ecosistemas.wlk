@@ -29,10 +29,11 @@ class Habitat{
 class Granja inherits Habitat{
 	
 	method sacarSerVivo(){
-		const serVivo = seresVivos.head()
-		seresVivos.drop(1)
-		return serVivo
+		const serVivo = seresVivos.anyOne()
+		seresVivos.remove(serVivo)
 	}
+	
+	override method estaEnEquilibrio() = seresVivos.all({ser => ser.estaHidratado()})	
 }
 
 class Especie{
@@ -43,11 +44,14 @@ class Especie{
 
 
 class SerVivo{
-	var property nivelDeHidratacion
+	var property nivelDeHidratacion = 0
 	
 	method tomarAguaMarciana(){
 		nivelDeHidratacion = 100.min(nivelDeHidratacion+10)
 	}
+	
+	method estaHidratado() = nivelDeHidratacion >= 50
+	
 }
 
 

@@ -64,6 +64,7 @@ describe "Granjas"{
 	const golondrina = new Especie(coeficiente = 15, formaLocomocion = volar, pesoReferencia = 2)
 	const mejillon = new Especie(coeficiente = 24, pesoReferencia = 0.5)
 	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
+	const ganado = new Especie(coeficiente = 24, pesoReferencia = 0.5)  
 	const plantusPotus = new Especie()
 	
 	const pepita = new Animal(especie = golondrina, peso = 1)
@@ -77,11 +78,10 @@ describe "Granjas"{
 	const granja = new Granja(seresVivos =  [pepita, almejita, palmera, arbusto])
 	const sabana = new Habitat(seresVivos = [pepita, palmera, arbusto])
 	
-	test "Si quito un animal de una granja, obtengo ese animal"{
-		var esto = granja.sacarSerVivo()
-		
-		assert.equals(esto, pepita)	
-	}
+	const vaca1 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
+	const vaca2 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
+	const vaca3 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
+	
 	
 	test "Se puede saber si la granja tiene una especie"{
 		assert.that(granja.tieneEspecie(plantusPotus))	
@@ -90,6 +90,13 @@ describe "Granjas"{
 	test "Las sabanas no entienden el metodo sacarSerVivo"{
 		assert.throwsException({sabana.sacarSerVivo()})
 	}
+	 
+	test "La granja de vacas esta en equilibrio"{
+		const granjaDeVacas = new Granja(seresVivos =  [vaca1, vaca2, vaca3])
+			
+		assert.that(granjaDeVacas.estaEnEquilibrio())	
+	}
+	
 }
 
 
