@@ -7,10 +7,10 @@ describe "tests de Ecosistemas (parte 1)" {
 	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
 	const plantusPotus = new Especie()
 	
-	const golondrina1 = new Animal(especie = golondrina, peso = 1)
-	const golondrina2 = new Animal(especie = golondrina, peso = 10)
-	const mejillon1 = new Animal(especie = mejillon, peso = 0.1)
-	const hormiga1 = new Animal(especie = hormiga, peso = 0.01)
+	const pepita = new Animal(especie = golondrina, peso = 1)
+	const lara = new Animal(especie = golondrina, peso = 10)
+	const almejita = new Animal(especie = mejillon, peso = 0.1)
+	const atomica = new Animal(especie = hormiga, peso = 0.01)
 	
 	const palmera = new Planta(altura = 9, especie = plantusPotus )
 	const arbusto = new Planta(altura = 3, especie = plantusPotus)
@@ -19,9 +19,9 @@ describe "tests de Ecosistemas (parte 1)" {
 	const arbol3 = new Planta(altura = 4000, especie = plantusPotus)
 	const rosa = new Planta(altura = 2, especie = plantusPotus)
 	
-	const llanura = new Habitat(seresVivos = [golondrina1, mejillon1, palmera, arbusto])
-	const desierto = new Habitat(seresVivos = [hormiga1, golondrina2, rosa, arbusto])
-	const bosque = new Habitat(seresVivos = [hormiga1, golondrina1, arbol1, arbol2, arbol3, arbol1, arbol2, arbol3])	
+	const llanura = new Habitat(seresVivos = [pepita, almejita, palmera, arbusto])
+	const desierto = new Habitat(seresVivos = [atomica, lara, rosa, arbusto])
+	const bosque = new Habitat(seresVivos = [atomica, lara, arbol1, arbol2, arbol3, arbol1, arbol2, arbol3])	
 	
 	method initialize(){
 		reserva.agregarHabitat(llanura)
@@ -53,9 +53,43 @@ describe "tests de Ecosistemas (parte 1)" {
 		assert.equals(bosque, reserva.mayorBiomasa())
 	}
 	test "Cantidad total de biomasa"{
-		assert.equals(reserva.totalBiomasa(), 340.80043)
+		assert.equals(347.40043, reserva.totalBiomasa())
 	}
 	test "Especie que esta en todos los habitats"{
 		assert.that(reserva.especieEnTodas(plantusPotus))
 	}
 }
+
+describe "Granjas"{
+	const golondrina = new Especie(coeficiente = 15, formaLocomocion = volar, pesoReferencia = 2)
+	const mejillon = new Especie(coeficiente = 24, pesoReferencia = 0.5)
+	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
+	const plantusPotus = new Especie()
+	
+	const pepita = new Animal(especie = golondrina, peso = 1)
+	const lara = new Animal(especie = golondrina, peso = 10)
+	const almejita = new Animal(especie = mejillon, peso = 0.1)
+	const atomica = new Animal(especie = hormiga, peso = 0.01)
+	
+	const palmera = new Planta(altura = 9, especie = plantusPotus)
+	const arbusto = new Planta(altura = 3, especie = plantusPotus)
+	
+	const granja = new Granja(seresVivos =  [pepita, almejita, palmera, arbusto])
+	const sabana = new Habitat(seresVivos = [pepita, palmera, arbusto])
+	
+	test "Si quito un animal de una granja, obtengo ese animal"{
+		var esto = granja.sacarSerVivo()
+		
+		assert.equals(esto, pepita)	
+	}
+	
+	test "Se puede saber si la granja tiene una especie"{
+		assert.that(granja.tieneEspecie(plantusPotus))	
+	}
+		
+	test "Las sabanas no entienden el metodo sacarSerVivo"{
+		assert.throwsException({sabana.sacarSerVivo()})
+	}
+}
+
+

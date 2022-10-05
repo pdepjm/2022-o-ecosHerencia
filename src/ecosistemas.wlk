@@ -26,6 +26,15 @@ class Habitat{
 	}
 }
 
+class Granja inherits Habitat{
+	
+	method sacarSerVivo(){
+		const serVivo = seresVivos.head()
+		seresVivos.drop(1)
+		return serVivo
+	}
+}
+
 class Especie{
 	const property coeficiente = 1;
 	const property formaLocomocion = quieto;
