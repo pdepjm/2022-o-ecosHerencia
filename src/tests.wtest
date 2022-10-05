@@ -1,0 +1,61 @@
+import ecosistemas.*
+
+describe "tests de Ecosistemas (parte 1)" {
+
+	const golondrina = new Especie(coeficiente = 15, formaLocomocion = volar, pesoReferencia = 2)
+	const mejillon = new Especie(coeficiente = 24, pesoReferencia = 0.5)
+	const hormiga = new Especie(coeficiente = 30, formaLocomocion = correr, pesoReferencia = 0.1)
+	const plantusPotus = new Especie()
+	
+	const golondrina1 = new Animal(especie = golondrina, peso = 1)
+	const golondrina2 = new Animal(especie = golondrina, peso = 10)
+	const mejillon1 = new Animal(especie = mejillon, peso = 0.1)
+	const hormiga1 = new Animal(especie = hormiga, peso = 0.01)
+	
+	const palmera = new Planta(altura = 9, especie = plantusPotus )
+	const arbusto = new Planta(altura = 3, especie = plantusPotus)
+	const arbol1 = new Planta(altura = 5000, especie = plantusPotus)
+	const arbol2 = new Planta(altura = 6000, especie = plantusPotus)
+	const arbol3 = new Planta(altura = 4000, especie = plantusPotus)
+	const rosa = new Planta(altura = 2, especie = plantusPotus)
+	
+	const llanura = new Habitat(seresVivos = [golondrina1, mejillon1, palmera, arbusto])
+	const desierto = new Habitat(seresVivos = [hormiga1, golondrina2, rosa, arbusto])
+	const bosque = new Habitat(seresVivos = [hormiga1, golondrina1, arbol1, arbol2, arbol3, arbol1, arbol2, arbol3])	
+	
+	method initialize(){
+		reserva.agregarHabitat(llanura)
+		reserva.agregarHabitat(desierto)
+		reserva.agregarHabitat(bosque)	
+	}
+	
+	test "Un habitat está en equilibrio cuando la cant de ejemplares grandes es menor a ⅓ de la cantidad de pequeños y hay alguno vivo"{ 
+		assert.that(llanura.estaEnEquilibrio())
+	}
+	test "Un habitat no está en equilibrio si no hay ningún ejemplar vivo"{
+		llanura.incendio()
+		assert.notThat(llanura.estaEnEquilibrio())
+	}
+	test "Un habitat no está en equilibrio cuando la cant de ejemplares grandes es mayor a ⅓ de la cantidad de pequeños"{
+		assert.notThat(desierto.estaEnEquilibrio())
+	}
+	
+	test "Si un habitat se incendia y todos sus ejemplares cumplen condición para morir, no queda ninguno vivo"{
+		llanura.incendio()
+		assert.notThat(llanura.hayAlgunoVivo())
+	}
+	test "Si un habitat se incendia y por lo menos uno de sus ejemplares cumple condición para vivir, queda alguno vivo"{
+		desierto.incendio()
+		assert.that(desierto.hayAlgunoVivo())
+	}
+	
+	test "Habitat de mayor biomasa"{
+		assert.equals(bosque, reserva.mayorBiomasa())
+	}
+	test "Cantidad total de biomasa"{
+		assert.equals(reserva.totalBiomasa(), 340.80043)
+	}
+	test "Especie que esta en todos los habitats"{
+		assert.that(reserva.especieEnTodas(plantusPotus))
+	}
+}

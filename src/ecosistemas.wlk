@@ -1,5 +1,5 @@
 object reserva {
-	const habitats = [] //[llanura,bosque,desierto]
+	const habitats = []
 	
 	method agregarHabitat(habitat) {
 		habitats.add(habitat)
@@ -14,21 +14,15 @@ object reserva {
 }
 
 class Habitat{
-	var property fauna = []
-	var property flora = []
+	const seresVivos = []
 	
-	method biodiversidad() = fauna + flora
-	
-	method tieneEspecie(especie) = self.biodiversidad().any({ser => ser.especie() == especie})
-	method biomasa() = self.biodiversidad().sum({ser => ser.biomasa()})
+	method tieneEspecie(especie) = seresVivos.any({ser => ser.especie() == especie})
+	method biomasa() = seresVivos.sum({ser => ser.biomasa()})
 	method estaEnEquilibrio() = (self.ejemplares("grande") < self.ejemplares("pequenio") / 3) && self.hayAlgunoVivo()
-	method hayAlgunoVivo() = self.biodiversidad().any({ser => ser.estaVivo()})
-	method ejemplares(tamanio) = self.biodiversidad().count({ser => ser.tamanio() == tamanio})
+	method hayAlgunoVivo() = seresVivos.any({ser => ser.estaVivo()})
+	method ejemplares(tamanio) = seresVivos.count({ser => ser.tamanio() == tamanio})
 	method incendio() {
-		
-		self.biodiversidad().forEach({ser => ser.sufrirIncendio()})
-		//fauna.forEach({animal => animal.sufrirIncendio()})
-		//flora.forEach({planta => planta.sufrirIncendio()})
+		seresVivos.forEach({ser => ser.sufrirIncendio()})
 	}
 }
 
@@ -59,30 +53,15 @@ class Animal{
 	
 	method estaVivo() = vivo
 	method biomasa() = peso ** 2 / especie.coeficiente() 
-	method tamanio(){ 
-						if (peso < especie.pesoReferencia()){
-							return "pequenio"
-						}
-						else if (peso > 2 * especie.pesoReferencia()){
-							return "grande"
-						}
-						else{
-							return "mediano"
-						}
-					}
+	method tamanio() = 
+		if (peso < especie.pesoReferencia()) "pequenio"
+		else if (peso > 2 * especie.pesoReferencia()) "grande"
+		else "mediano"
+			
 	method sufrirIncendio() {
-		//if (!((self.especie().formaLocomocion() == "volar" && self.tamanio() == "grande") || 
-			 //  self.especie().formaLocomocion() == "nadar" ||
-			  //(self.especie().formaLocomocion() == "correr" && self.tamanio() == "mediano"))) {vivo = false}
-		
-		vivo = (self.especie().formaLocomocion().seSalva(self.tamanio()))
-		//if(!(self.especie().formaLocomocion().seSalva(self.tamanio()))) {vivo = false}
-		//hacer que los metodos de locomoción sea un objeto y que entienda un mensaje 
-		// 
-		self.perderPeso(0.1)
-	}
-	
-	method perderPeso(porcentaje) {peso -= peso*porcentaje}	
+		vivo = self.especie().formaLocomocion().seSalva(self.tamanio()) 
+		peso -= peso * 0.9
+	}	
 }
 
 object volar{
