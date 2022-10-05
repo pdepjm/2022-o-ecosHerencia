@@ -41,7 +41,17 @@ class Especie{
 	const property pesoReferencia = 1;
 }
 
-class Planta{
+
+class SerVivo{
+	var property nivelDeHidratacion
+	
+	method tomarAguaMarciana(){
+		nivelDeHidratacion = 100.min(nivelDeHidratacion+10)
+	}
+}
+
+
+class Planta inherits SerVivo{
 	var property altura;
 	const property especie;
 	var vivo = true
@@ -55,7 +65,7 @@ class Planta{
 	}
 }
 
-class Animal{
+class Animal inherits SerVivo{
 	const property especie;
 	var property peso;
 	var vivo = true

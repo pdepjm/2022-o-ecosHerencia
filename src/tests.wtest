@@ -93,3 +93,18 @@ describe "Granjas"{
 }
 
 
+describe "Seres vivos"{
+	const golondrina = new Especie(coeficiente = 15, formaLocomocion = volar, pesoReferencia = 2)
+	const ganado = new Especie(coeficiente = 24, pesoReferencia = 0.5)  
+	
+	const vaca = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
+	
+	test "Una vaca al tomarAgua sube en 10 su hidratacion"{
+		assert.equals(50, vaca.nivelDeHidratacion())	
+		
+		vaca.tomarAguaMarciana()
+		
+		assert.equals(60, vaca.nivelDeHidratacion())	
+	}
+}
+
