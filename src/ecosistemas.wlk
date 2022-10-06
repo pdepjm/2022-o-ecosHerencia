@@ -26,18 +26,62 @@ class Habitat{
 	}
 }
 
-class Especie{
-	const property coeficiente = 1;
-	const property formaLocomocion = quieto;
-	const property pesoReferencia = 1;
+class Granja inherits Habitat{
+	
+	method sacarUno() {
+		seresVivos.remove(seresVivos.anyOne())
+	}
+	
+	method hidratarATodos(){
+		seresVivos.forEach({ ser => ser.tomarAgua() })
+	}
+	
+	override method estaEnEquilibrio() = seresVivos.all({ ser => ser.estaHidratado() })
+
+	method hayComida() = seresVivos.any({ ser => ser.estaListo() })
 }
 
-class Planta{
-	var property altura;
-	const property especie;
-	var vivo = true
+class Cueva inherits Habitat{
+	var property metrosCuadrados = 1
 	
+	override method biomasa() = super() + (metrosCuadrados *10)
+	
+	method nivelDeMarcianilidad(){
+		if(!self.hayAlgunoVivo())
+			throw new Exception(message = "Ojo al piojo")
+			
+		return self.biomasa() * 10
+	}
+}
+
+
+
+
+
+class SerVivo{ // esto es una clase abstacta, no nos interesa hacer un new SerVivo
+	var vivo = true
+	var property hidratacion = 10
+		
 	method estaVivo() = vivo
+			
+	method tomarAgua() {
+		hidratacion = 100.min(hidratacion * 1.1)
+	}
+	
+	method estaHidratado() = hidratacion >= 50
+						//pepita.estaListo() -> self es pepita 
+						// potus.estaListo() -> self es potus
+	method estaListo() = !self.estaVivo() && !self.esPequenio()
+	
+	method esPequenio() = self.tamanio() == "pequenio" 
+	
+	method tamanio() // esto es un metodo abstracto, es documentacion
+}
+
+class Planta inherits SerVivo{
+	var property altura;
+	const property especie; 
+	
 	method biomasa() = 50.min(altura * 2)
 	method tamanio() = if (altura >= 10) "grande" else "pequenio"
 	method sufrirIncendio() {
@@ -46,12 +90,10 @@ class Planta{
 	}
 }
 
-class Animal{
+class Animal inherits SerVivo{
 	const property especie;
 	var property peso;
-	var vivo = true
-	
-	method estaVivo() = vivo
+
 	method biomasa() = peso ** 2 / especie.coeficiente() 
 	method tamanio() = 
 		if (peso < especie.pesoReferencia()) "pequenio"
@@ -62,6 +104,14 @@ class Animal{
 		vivo = self.especie().formaLocomocion().seSalva(self.tamanio()) 
 		peso -= peso * 0.9
 	}	
+}
+
+
+
+class Especie{
+	const property coeficiente = 1;
+	const property formaLocomocion = quieto;
+	const property pesoReferencia = 1;
 }
 
 object volar{
