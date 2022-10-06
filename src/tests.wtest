@@ -80,7 +80,7 @@ describe "Granjas"{
 	const vaca2 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
 	const vaca3 = new Animal(especie = ganado, peso = 100, nivelDeHidratacion=50)
 	
-	const  = new Granja(seresVivos =  [vaca1, vaca2, vaca3])
+	const granjaDeVacas = new Granja(seresVivos =  [vaca1, vaca2, vaca3])
 		
 	test "Se puede saber si la granja tiene una especie"{
 		assert.that(granja.tieneEspecie(plantusPotus))	
@@ -96,7 +96,6 @@ describe "Granjas"{
 	
 	test "Una granja de vacas despues de un incendio esta lista para dar comida"{
 		granjaDeVacas.incendio()
-		
 		assert.that(granjaDeVacas.estaLista())	
 	}		
 }

@@ -35,7 +35,7 @@ class Granja inherits Habitat{
 	
 	override method estaEnEquilibrio() = seresVivos.all({ser => ser.estaHidratado()})	
 	
-	method estaLista() = seresVivos.AnyOne({ser => ser.estaListo()})
+	method estaLista() = seresVivos.any({ser => ser.estaListo()})
 }
 
 class Cueva inherits Habitat{
